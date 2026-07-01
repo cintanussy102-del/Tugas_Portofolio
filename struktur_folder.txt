@@ -1,0 +1,25 @@
+TUGAS PORTOFOLIO/
+│
+├── Backend/
+│   ├── admin/
+│   │   ├── dashboard.py
+│   │   └── [file backend lainnya]
+│   └── utama/
+│       └── utama.py
+│
+├── Frontend/
+│   ├── Admin/
+│   │   └── [file html admin]
+│   └── Utama/
+│       └── [aset gambar]
+│
+├── .env
+├── .env.example
+├── app.py
+├── config.py
+├── DB_682024043_Cinta.sql
+├── favicon.ico         💡 (Sekarang sudah ada di sini, sejajar dengan contoh dosen!)
+├── model.py
+├── README.md
+├── requirements.txt
+└── struktur_folder.txt
