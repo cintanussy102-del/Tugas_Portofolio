@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pengaturan Akun | Admin</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
+        body {
+            margin: 0; padding: 0; background-color: #1a1512; color: #f5f0eb;
+            background-image: linear-gradient(rgba(26, 21, 18, 0.6), rgba(26, 21, 18, 0.6)), url('/Frontend/Utama/BG Admin.jpg');
+            background-size: cover; background-position: center; background-attachment: fixed;
+            display: flex; height: 100vh; overflow: hidden;
+        }
+        
+        /* SIDEBAR TASKBAR NAV PANEL */
+        .sidebar {
+            width: 240px; background: rgba(20, 16, 14, 0.95);
+            border-right: 1px solid rgba(255,255,255,0.05);
+            display: flex; flex-direction: column; transition: width 0.3s ease; z-index: 10;
+        }
+        .sidebar.collapsed { width: 70px; }
+        .sidebar-brand {
+            padding: 20px; font-size: 18px; font-weight: bold; border-bottom: 1px solid rgba(255,255,255,0.05);
+            display: flex; justify-content: space-between; align-items: center; white-space: nowrap;
+        }
+        .sidebar-brand span { color: #d4af37; }
+        .toggle-btn { cursor: pointer; color: #d4af37; font-size: 20px; background: none; border: none; }
+        .sidebar-menu { list-style: none; padding: 15px 0; margin: 0; flex: 1; }
+        .sidebar-menu li a {
+            display: flex; align-items: center; padding: 12px 20px; color: #a89f9b;
+            text-decoration: none; font-weight: 500; transition: all 0.2s; white-space: nowrap;
+        }
+        .sidebar-menu li.active a, .sidebar-menu li a:hover {
+            background: rgba(214, 175, 55, 0.1); color: #fff; border-left: 3px solid #d4af37;
+        }
+        .sidebar-menu li a .icon { margin-right: 15px; font-size: 18px; width: 20px; text-align: center; }
+        .sidebar.collapsed .menu-text { display: none; }
+        
+        /* CONTENT SECTION RIGHT */
+        .main-content { flex: 1; display: flex; flex-direction: column; overflow-y: auto; background: rgba(26, 21, 18, 0.4); }
+        .header-bar {
+            padding: 15px 30px; display: flex; justify-content: space-between; align-items: center;
+            background: rgba(31, 25, 23, 0.5); border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .content-wrapper { padding: 30px; max-width: 600px; width: 100%; margin: 0 auto; }
+        
+        .settings-card {
+            background: rgba(38, 32, 30, 0.85); border: 1px solid rgba(61, 53, 49, 0.6);
+            border-radius: 12px; padding: 30px; box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+            backdrop-filter: blur(8px); text-align: left;
+        }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; color: #ffd39e; font-size: 14px; margin-bottom: 8px; font-weight: 500; }
+        .form-group input {
+            width: 100%; padding: 12px; background: #120e0d; border: 1px solid #4a3f3b;
+            border-radius: 8px; color: #fff; font-size: 14px; transition: border-color 0.2s;
+        }
+        .form-group input:focus { border-color: #d4af37; outline: none; }
+        .btn-save {
+            background: #d4af37; color: #1a1512; border: none; width: 100%;
+            padding: 14px; border-radius: 8px; font-weight: bold; font-size: 15px;
+            cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 10px rgba(214,175,55,0.2);
+        }
+        .btn-save:hover { transform: translateY(-2px); box-shadow: 0 6px 15px rgba(214,175,55,0.4); }
+    </style>
+</head>
+<body>
+
+    <aside class="sidebar" id="adminSidebar">
+        <div class="sidebar-brand">
+            <div class="menu-text">Cinta.<span>Admin</span></div>
+            <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
+        </div>
+        <ul class="sidebar-menu">
+            <li><a href="/admin/dashboard"><span class="icon">📊</span><span class="menu-text">Dashboard</span></a></li>
+            <li><a href="/admin/profiles"><span class="icon">👤</span><span class="menu-text">Profile</span></a></li>
+            <li><a href="/admin/skills"><span class="icon">🛠️</span><span class="menu-text">Skills</span></a></li>
+            <li><a href="/admin/experience"><span class="icon">💼</span><span class="menu-text">Experience</span></a></li>
+            <li><a href="/admin/projects"><span class="icon">📂</span><span class="menu-text">Projects</span></a></li>
+            <li><a href="/admin/messages"><span class="icon">✉️</span><span class="menu-text">Message</span></a></li>
+            <li class="active"><a href="/admin/settings"><span class="icon">⚙️</span><span class="menu-text">Settings</span></a></li>
+            <li style="margin-top: 40px;"><a href="/admin/logout" style="color: #ff6b6b;"><span class="icon">🚪</span><span class="menu-text">Keluar</span></a></li>
+        </ul>
+    </aside>
+
+    <main class="main-content">
+        <div class="header-bar">
+            <h2 style="margin: 0; font-size: 20px;">Account Settings</h2>
+            <div style="font-size: 14px; color: #a89f9b;">Role: <strong style="color:#d4af37;">Admin</strong></div>
+        </div>
+        
+        <div class="content-wrapper">
+            <h3 style="color:#d4af37; margin-top:0; font-size:24px; margin-bottom:25px;">⚙️ Pengaturan Kredensial Admin</h3>
+
+            {% with alerts = get_flashed_messages() %}
+              {% if alerts %}
+                {% for alert in alerts %}
+                  <div style="background: rgba(40, 167, 69, 0.2); border: 1px solid #28a745; color: #2dd4bf; padding: 12px; border-radius: 6px; margin-bottom: 20px; font-size: 14px;">
+                      {{ alert }}
+                  </div>
+                {% endfor %}
+              {% endif %}
+            {% endwith %}
+
+            <div class="settings-card">
+                <form action="{{ url_for('settings_admin.index') }}" method="POST">
+                    <div class="form-group">
+                        <label>Username Baru:</label>
+                        <input type="text" name="username" value="{{ session.get('username') }}" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Password Baru:</label>
+                        <input type="password" name="password" placeholder="Ketik password baru disini..." required>
+                    </div>
+                    <button type="submit" class="btn-save">Simpan Perubahan Akun</button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        function toggleSidebar() {
+            document.getElementById('adminSidebar').classList.toggle('collapsed');
+        }
+    </script>
+</body>
+</html>

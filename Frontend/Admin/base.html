@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Admin | Cinta</title>
+    <link rel="stylesheet" href="/Frontend/Admin/css/base.css">
+    {% block css %}{% endblock %}
+</head>
+<body style="margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: url('/Frontend/Utama/BG Admin.jpg') no-repeat center center fixed; background-size: cover; min-height: 100vh; color: #ffd39e;">
+
+    <div style="background: rgba(20, 16, 15, 0.85); min-height: 100vh; display: flex;">
+
+        <div class="sidebar" style="width: 250px; background: rgba(29, 24, 22, 0.9); border-right: 1px solid #3d3531; padding: 30px 20px; display: flex; flex-direction: column; gap: 10px; flex-shrink: 0;">
+            <div class="logo" style="font-size: 20px; font-weight: bold; color: #ffd39e; margin-bottom: 40px; padding-left: 10px;">
+                Cinta.<span style="color: #d4af37;">Admin</span>
+            </div>
+            <a href="/admin/dashboard" style="display: flex; align-items: center; gap: 12px; padding: 12px 15px; color: #ffd39e; text-decoration: none; border-radius: 6px; background: rgba(212, 175, 55, 0.1); font-weight: bold;">📊 Dashboard</a>
+            <a href="/admin/profiles" style="display: flex; align-items: center; gap: 12px; padding: 12px 15px; color: #ffd39e; text-decoration: none; border-radius: 6px; opacity: 0.7;">👤 Profile</a>
+            <a href="/admin/skills" style="display: flex; align-items: center; gap: 12px; padding: 12px 15px; color: #ffd39e; text-decoration: none; border-radius: 6px; opacity: 0.7;">🛠️ Skills</a>
+            <a href="/admin/experience" style="display: flex; align-items: center; gap: 12px; padding: 12px 15px; color: #ffd39e; text-decoration: none; border-radius: 6px; opacity: 0.7;">💼 Experience</a>
+            <a href="/admin/projects" style="display: flex; align-items: center; gap: 12px; padding: 12px 15px; color: #ffd39e; text-decoration: none; border-radius: 6px; opacity: 0.7;">📁 Projects</a>
+            <a href="/admin/messages" style="display: flex; align-items: center; gap: 12px; padding: 12px 15px; color: #ffd39e; text-decoration: none; border-radius: 6px; opacity: 0.7;">✉️ Message</a>
+            <a href="/admin/settings" style="display: flex; align-items: center; gap: 12px; padding: 12px 15px; color: #ffd39e; text-decoration: none; border-radius: 6px; opacity: 0.7;">⚙️ Settings</a>
+            <a href="/logout" style="display: flex; align-items: center; gap: 12px; padding: 12px 15px; color: #ff6b6b; text-decoration: none; border-radius: 6px; margin-top: auto; font-weight: bold;">🚪 Keluar</a>
+        </div>
+
+        <div class="main-content" style="flex-grow: 1; padding: 40px; overflow-y: auto;">
+            
+            <div class="stats-grid" style="margin-bottom: 40px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px;">
+                
+                <div class="stat-card" style="background: rgba(38, 32, 30, 0.6); padding: 20px; border-radius: 8px; border: 1px solid #3d3531; display: flex !important; align-items: center; gap: 15px;">
+                    <div style="width: 40px; height: 40px; background: rgba(49, 130, 206, 0.15); border-radius: 8px; display: flex !important; align-items: center; justify-content: center; flex-shrink: 0;">
+                        <img src="/static/Update.ico" alt="Icon" style="width: 20px; height: 20px; object-fit: contain;">
+                    </div>
+                    <div style="text-align: left;">
+                        <h3 style="color: #ffd39e; margin: 0 0 5px 0; font-size: 14px;">PROYEK DIPERBARUI</h3>
+                        <p class="stat-number" style="font-size: 24px; font-weight: bold; color: #d4af37; margin: 0;">{{ stats.projects if stats and stats.projects else '3' }}</p>
+                    </div>
+                </div>
+
+                <div class="stat-card" style="background: rgba(38, 32, 30, 0.6); padding: 20px; border-radius: 8px; border: 1px solid #3d3531; display: flex !important; align-items: center; gap: 15px;">
+                    <div style="width: 40px; height: 40px; background: rgba(46, 204, 113, 0.15); border-radius: 8px; display: flex !important; align-items: center; justify-content: center; flex-shrink: 0;">
+                        <img src="/static/project.ico" alt="Icon" style="width: 20px; height: 20px; object-fit: contain;">
+                    </div>
+                    <div style="text-align: left;">
+                        <h3 style="color: #ffd39e; margin: 0 0 5px 0; font-size: 14px;">TOTAL PROYEK</h3>
+                        <p class="stat-number" style="font-size: 24px; font-weight: bold; color: #d4af37; margin: 0;">{{ stats.projects if stats and stats.projects else '3' }}</p>
+                    </div>
+                </div>
+
+                <div class="stat-card" style="background: rgba(38, 32, 30, 0.6); padding: 20px; border-radius: 8px; border: 1px solid #3d3531; display: flex !important; align-items: center; gap: 15px;">
+                    <div style="width: 40px; height: 40px; background: rgba(230, 126, 34, 0.15); border-radius: 8px; display: flex !important; align-items: center; justify-content: center; flex-shrink: 0;">
+                        <img src="/static/message.ico" alt="Icon" style="width: 20px; height: 20px; object-fit: contain;">
+                    </div>
+                    <div style="text-align: left;">
+                        <h3 style="color: #ffd39e; margin: 0 0 5px 0; font-size: 14px;">PESAN MASUK</h3>
+                        <p class="stat-number" style="font-size: 24px; font-weight: bold; color: #d4af37; margin: 0;">1</p>
+                    </div>
+                </div>
+
+                <div class="stat-card" style="background: rgba(38, 32, 30, 0.6); padding: 20px; border-radius: 8px; border: 1px solid #3d3531; display: flex !important; align-items: center; gap: 15px;">
+                    <div style="width: 40px; height: 40px; background: rgba(155, 89, 182, 0.15); border-radius: 8px; display: flex !important; align-items: center; justify-content: center; flex-shrink: 0;">
+                        <img src="/static/skill.ico" alt="Icon" style="width: 20px; height: 20px; object-fit: contain;">
+                    </div>
+                    <div style="text-align: left;">
+                        <h3 style="color: #ffd39e; margin: 0 0 5px 0; font-size: 14px;">TOTAL SKILL</h3>
+                        <p class="stat-number" style="font-size: 24px; font-weight: bold; color: #d4af37; margin: 0;">{{ stats.skills if stats and stats.skills else '6' }}</p>
+                    </div>
+                </div>
+
+            </div>
+
+            {% block content %}{% endblock %}
+            
+        </div>
+    </div>
+
+</body>
+</html>

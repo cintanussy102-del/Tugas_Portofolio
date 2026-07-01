@@ -1,0 +1,11 @@
+/* Kustomisasi Tabel Pengalaman */
+.admin-table strong {
+    color: #ffffff;
+    font-size: 1rem;
+}
+
+.admin-table small {
+    font-size: 0.85rem;
+    display: inline-block;
+    margin-top: 0.2rem;
+}

@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<style>
+    /* 1. PAKSA KARTU LAMA BIAR JADI FLEXBOX DAN COCOK SAMA IKON */
+    .stats-grid .stat-card, .stat-card {
+        display: flex !important;
+        align-items: center !important;
+        gap: 15px !important;
+        padding: 15px 20px !important;
+        text-align: left !important;
+    }
+
+    /* 2. MATIKAN MARGIN BAWAAN BIAR TEKS SEJAJAR GAK TURUN */
+    .stats-grid .stat-card h3, .stat-card h3 {
+        margin: 0 0 5px 0 !important;
+        text-align: left !important;
+    }
+
+    /* 3. COPASTING OTOMATIS IKON DI SEBELAH KIRI SETIAP KARTU BERDASARKAN URUTAN */
+    .stats-grid div:nth-child(1).stat-card::before, .stat-card:nth-child(1)::before {
+        content: "" !important; width: 40px !important; height: 40px !important;
+        background: rgba(49, 130, 206, 0.15) url('/static/update.ico') no-repeat center !important;
+        background-size: 20px 20px !important; border-radius: 8px !important; display: block !important; flex-shrink: 0 !important;
+    }
+    .stats-grid div:nth-child(2).stat-card::before, .stat-card:nth-child(2)::before {
+        content: "" !important; width: 40px !important; height: 40px !important;
+        background: rgba(46, 204, 113, 0.15) url('/static/project.ico') no-repeat center !important;
+        background-size: 20px 20px !important; border-radius: 8px !important; display: block !important; flex-shrink: 0 !important;
+    }
+    .stats-grid div:nth-child(3).stat-card::before, .stat-card:nth-child(3)::before {
+        content: "" !important; width: 40px !important; height: 40px !important;
+        background: rgba(230, 126, 34, 0.15) url('/static/message.ico') no-repeat center !important;
+        background-size: 20px 20px !important; border-radius: 8px !important; display: block !important; flex-shrink: 0 !important;
+    }
+    .stats-grid div:nth-child(4).stat-card::before, .stat-card:nth-child(4)::before {
+        content: "" !important; width: 40px !important; height: 40px !important;
+        background: rgba(155, 89, 182, 0.15) url('/static/skill.ico') no-repeat center !important;
+        background-size: 20px 20px !important; border-radius: 8px !important; display: block !important; flex-shrink: 0 !important;
+    }
+</style>
+
+<div class="cards-grid-new">
+    
+    <div class="stat-card-new card-blue">
+        <div class="icon-box-new icon-blue">
+            <img src="/favicon.ico" alt="Icon" style="width: 24px; height: 24px; object-fit: contain;">
+        </div>
+        <div class="stat-info-new">
+            <div class="stat-label-new">Proyek Diperbarui</div>
+            <h3 class="stat-number-new">{{ stats.projects if stats and stats.projects else '3' }}</h3>
+        </div>
+    </div>
+
+    <div class="stat-card-new card-green">
+        <div class="icon-box-new icon-green">
+            <img src="/favicon.ico" alt="Icon" style="width: 24px; height: 24px; object-fit: contain;">
+        </div>
+        <div class="stat-info-new">
+            <div class="stat-label-new">Total Proyek</div>
+            <h3 class="stat-number-new">{{ stats.projects if stats and stats.projects else '3' }}</h3>
+        </div>
+    </div>
+
+    <div class="stat-card-new card-orange">
+        <div class="icon-box-new icon-orange">
+            <img src="/favicon.ico" alt="Icon" style="width: 24px; height: 24px; object-fit: contain;">
+        </div>
+        <div class="stat-info-new">
+            <div class="stat-label-new">Pesan Masuk</div>
+            <h3 class="stat-number-new">1</h3>
+        </div>
+    </div>
+
+    <div class="stat-card-new card-purple">
+        <div class="icon-box-new icon-purple">
+            <img src="/favicon.ico" alt="Icon" style="width: 24px; height: 24px; object-fit: contain;">
+        </div>
+        <div class="stat-info-new">
+            <div class="stat-label-new">Total Skill</div>
+            <h3 class="stat-number-new">{{ stats.skills if stats and stats.skills else '6' }}</h3>
+        </div>
+    </div>
+
+</div>
+
+<div style="
+    background: #231b18; 
+    padding: 45px 30px; 
+    border-radius: 12px; 
+    box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+    max-width: 700px; 
+    margin: 0 auto; 
+    text-align: center;
+">
+    <h1 style="color: #d4af37; font-size: 32px; margin: 0 0 10px 0; font-weight: bold;">Welcome to the Portfolio Admin Dashboard!</h1>
+    <p style="color: #a89f9b; font-size: 14px; margin: 0 0 35px 0;">Login Successful. Please select a management menu from the options below:</p>
+
+    <div style="display: flex; flex-direction: column; gap: 15px; align-items: center;">
+        
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; width: 100%;">
+            <a href="{{ url_for('profiles_admin.manage_profile') }}" style="display: block; text-align: center; padding: 12px; background: #1a1512; color: #d4af37; border: 1px solid #4a3f3b; border-radius: 6px; font-weight: bold; font-size: 14px; text-decoration: none;">Manage Profile</a>
+            <a href="{{ url_for('skills.index') }}" style="display: block; text-align: center; padding: 12px; background: #1a1512; color: #d4af37; border: 1px solid #4a3f3b; border-radius: 6px; font-weight: bold; font-size: 14px; text-decoration: none;">Manage Skills</a>
+            <a href="{{ url_for('experience.index') }}" style="display: block; text-align: center; padding: 12px; background: #1a1512; color: #d4af37; border: 1px solid #4a3f3b; border-radius: 6px; font-weight: bold; font-size: 14px; text-decoration: none;">Manage Experience</a>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; width: 66%;">
+            <a href="{{ url_for('projects.index') }}" style="display: block; text-align: center; padding: 12px; background: #1a1512; color: #d4af37; border: 1px solid #4a3f3b; border-radius: 6px; font-weight: bold; font-size: 14px; text-decoration: none;">Manage Projects</a>
+            <a href="/" target="_blank" style="display: block; text-align: center; padding: 12px; background: #1a1512; color: #d4af37; border: 1px solid #4a3f3b; border-radius: 6px; font-weight: bold; font-size: 14px; text-decoration: none;">View Live Website</a>
+        </div>
+        
+        <div style="margin-top: 30px;">
+            <a href="{{ url_for('login_admin.logout') }}" style="color: #ff4747; text-decoration: none; font-weight: 900; font-size: 18px; letter-spacing: 1px;">
+                LOGOUT
+            </a>
+        </div>
+        
+    </div>
+</div>
+{% endblock %}

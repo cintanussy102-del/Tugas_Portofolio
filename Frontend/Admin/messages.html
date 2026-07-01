@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kelola Pesan | Admin</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
+        body {
+            margin: 0; padding: 0; background-color: #1a1512; color: #f5f0eb;
+            background-image: linear-gradient(rgba(26, 21, 18, 0.6), rgba(26, 21, 18, 0.6)), url('/Frontend/Utama/BG Admin.jpg');
+            background-size: cover; background-position: center; background-attachment: fixed;
+            display: flex; height: 100vh; overflow: hidden;
+        }
+        
+        /* SIDEBAR NAVIGASI PANEL LEFT */
+        .sidebar {
+            width: 240px; background: rgba(20, 16, 14, 0.95);
+            border-right: 1px solid rgba(255,255,255,0.05);
+            display: flex; flex-direction: column; transition: width 0.3s ease; z-index: 10;
+        }
+        .sidebar.collapsed { width: 70px; }
+        .sidebar-brand {
+            padding: 20px; font-size: 18px; font-weight: bold; border-bottom: 1px solid rgba(255,255,255,0.05);
+            display: flex; justify-content: space-between; align-items: center; white-space: nowrap;
+        }
+        .sidebar-brand span { color: #d4af37; }
+        .toggle-btn { cursor: pointer; color: #d4af37; font-size: 20px; background: none; border: none; }
+        .sidebar-menu { list-style: none; padding: 15px 0; margin: 0; flex: 1; }
+        .sidebar-menu li a {
+            display: flex; align-items: center; padding: 12px 20px; color: #a89f9b;
+            text-decoration: none; font-weight: 500; transition: all 0.2s; white-space: nowrap;
+        }
+        .sidebar-menu li.active a, .sidebar-menu li a:hover {
+            background: rgba(214, 175, 55, 0.1); color: #fff; border-left: 3px solid #d4af37;
+        }
+        .sidebar-menu li a .icon { margin-right: 15px; font-size: 18px; width: 20px; text-align: center; }
+        .sidebar.collapsed .menu-text { display: none; }
+        
+        /* AREA KONTEN PANEL RIGHT */
+        .main-content { flex: 1; display: flex; flex-direction: column; overflow-y: auto; background: rgba(26, 21, 18, 0.4); }
+        .header-bar {
+            padding: 15px 30px; display: flex; justify-content: space-between; align-items: center;
+            background: rgba(31, 25, 23, 0.5); border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .content-wrapper { padding: 30px; max-width: 1000px; width: 100%; margin: 0 auto; }
+        
+        .message-title { color: #d4af37; font-size: 24px; margin-bottom: 25px; font-weight: bold; }
+        
+        /* LIST KOTAK PESAN */
+        .message-card {
+            background: rgba(38, 32, 30, 0.85); border: 1px solid rgba(61, 53, 49, 0.6);
+            border-radius: 12px; padding: 22px; margin-bottom: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            backdrop-filter: blur(8px); transition: all 0.3s ease;
+        }
+        .message-card:hover { border-color: #d4af37; }
+        .message-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; margin-bottom: 15px; }
+        .sender-info h4 { margin: 0; color: #f5f0eb; font-size: 16px; font-weight: 600; }
+        .sender-info span { color: #a89f9b; font-size: 13px; display: block; margin-top: 4px; }
+        .message-body { color: #e0d9d3; font-size: 14px; line-height: 1.6; margin: 0; padding: 5px 0; }
+        .time-badge { color: #ffd39e; font-size: 13px; font-weight: 500; background: rgba(214, 175, 55, 0.1); padding: 4px 10px; border-radius: 6px; border: 1px solid rgba(214, 175, 55, 0.2); }
+        
+        /* STYLING TOMBOL HAPUS BARU */
+        .message-footer {
+            margin-top: 15px; padding-top: 15px; border-top: 1px dashed rgba(255,255,255,0.1);
+            display: flex; justify-content: flex-end; /* Posisi di kanan */
+        }
+        .btn-delete {
+            background: rgba(239, 68, 68, 0.15); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.3);
+            padding: 8px 16px; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s;
+            display: flex; align-items: center; gap: 5px;
+        }
+        .btn-delete:hover { background: #ef4444; color: #fff; }
+    </style>
+</head>
+<body>
+
+    <aside class="sidebar" id="adminSidebar">
+        <div class="sidebar-brand">
+            <div class="menu-text">Cinta.<span>Admin</span></div>
+            <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
+        </div>
+        <ul class="sidebar-menu">
+            <li><a href="/admin/dashboard"><span class="icon">📊</span><span class="menu-text">Dashboard</span></a></li>
+            <li><a href="/admin/profiles"><span class="icon">👤</span><span class="menu-text">Profile</span></a></li>
+            <li><a href="/admin/skills"><span class="icon">🛠️</span><span class="menu-text">Skills</span></a></li>
+            <li><a href="/admin/experience"><span class="icon">💼</span><span class="menu-text">Experience</span></a></li>
+            <li><a href="/admin/projects"><span class="icon">📂</span><span class="menu-text">Projects</span></a></li>
+            <li class="active"><a href="/admin/messages"><span class="icon">✉️</span><span class="menu-text">Message</span></a></li>
+            <li><a href="/admin/settings"><span class="icon">⚙️</span><span class="menu-text">Settings</span></a></li>
+            <li style="margin-top: 40px;"><a href="/admin/logout" style="color: #ff6b6b;"><span class="icon">🚪</span><span class="menu-text">Keluar</span></a></li>
+        </ul>
+    </aside>
+
+    <main class="main-content">
+        <div class="header-bar">
+            <h2 style="margin: 0; font-size: 20px;">Messages Portal</h2>
+            <div style="font-size: 14px; color: #a89f9b;">Role: <strong style="color:#d4af37;">Admin</strong></div>
+        </div>
+        
+        <div class="content-wrapper">
+            <div class="message-title">📥 Kotak Pesan Masuk</div>
+
+            {% if messages %}
+                {% for msg in messages %}
+                <div class="message-card">
+                    <div class="message-header">
+                        <div class="sender-info">
+                            <h4>{{ msg.name }}</h4>
+                            <span>Email: <strong style="color: #ffd39e;">{{ msg.email }}</strong></span>
+                        </div>
+                        <div class="time-badge">🕒 {{ msg.created_at }}</div>
+                    </div>
+                    <div class="message-body">{{ msg.message }}</div>
+                    
+                    <!-- AREA FOOTER UNTUK TOMBOL HAPUS -->
+                    <div class="message-footer">
+                        <form action="{{ url_for('messages_admin.delete_message', msg_id=msg.id) }}" method="POST" onsubmit="return confirm('Kamu yakin ingin menghapus pesan dari {{ msg.name }} ini? Data tidak bisa dikembalikan lho.');">
+                            <button type="submit" class="btn-delete">🗑️ Hapus Pesan</button>
+                        </form>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div style="text-align: center; color: #a89f9b; padding: 40px; background: rgba(38,32,30,0.4); border-radius: 8px;">
+                    Belum ada pesan kontak yang masuk di database.
+                </div>
+            {% endif %}
+        </div>
+    </main>
+
+    <script>
+        function toggleSidebar() {
+            document.getElementById('adminSidebar').classList.toggle('collapsed');
+        }
+    </script>
+</body>
+</html>

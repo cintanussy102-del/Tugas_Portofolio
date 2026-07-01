@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* ANIMASI LATAR BERGERAK HALUS */
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        body { 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            background: linear-gradient(-45deg, #1a1512, #2a201b, #3d312a, #ffd39e, #1a1512);
+            background-size: 400% 400%;
+            animation: gradientMove 20s ease infinite;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            box-sizing: border-box;
+            padding: 20px;
+        }
+
+        /* CARD LOGIN PUTIH BERSIH */
+        .login-card { 
+            width: 100%;
+            max-width: 440px; 
+            background: #ffffff; 
+            padding: 40px 35px; 
+            border-radius: 16px; 
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3); 
+            text-align: center;
+            position: relative;
+        }
+
+        /* LINK KEMBALI KE BERANDA */
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #718096;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 25px;
+            transition: color 0.2s;
+        }
+        .back-link:hover {
+            color: #2b6cb0;
+        }
+
+        h2 {
+            color: #1a202c;
+            margin: 0 0 8px 0;
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            color: #718096;
+            font-size: 14px;
+            margin-bottom: 30px;
+        }
+
+        .form-group { 
+            margin-bottom: 22px; 
+            text-align: left;
+        }
+
+        label { 
+            display: block; 
+            margin-bottom: 8px; 
+            color: #4a5568; 
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        /* INPUT WRAPPER UNTUK IKON */
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 15px;
+            color: #a0aec0;
+            font-size: 16px;
+            pointer-events: none;
+        }
+
+        input[type="text"], input[type="password"] { 
+            width: 100%; 
+            padding: 14px 15px 14px 45px; 
+            background: #ffffff; 
+            border: 1px solid #e2e8f0; 
+            color: #1a202c; 
+            border-radius: 8px; 
+            box-sizing: border-box; 
+            font-size: 14px;
+            transition: all 0.2s ease;
+        }
+
+        input[type="text"]:focus, input[type="password"]:focus { 
+            border-color: #3182ce; 
+            outline: none; 
+            box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.15);
+        }
+
+        /* TOMBOL MASUK BIRU */
+        button { 
+            width: 100%;
+            background: #2b6cb0; 
+            color: #ffffff; 
+            border: none; 
+            padding: 14px; 
+            font-weight: 600; 
+            font-size: 16px;
+            border-radius: 25px; 
+            cursor: pointer; 
+            transition: background 0.2s ease; 
+            margin-top: 10px;
+        }
+
+        button:hover { 
+            background: #1d4ed8; 
+        }
+
+        .alert-danger { 
+            color: #e53e3e; 
+            background: #fff5f5;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px; 
+            font-size: 13px;
+            font-weight: 600; 
+            border: 1px solid #fed7d7;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-card">
+        <a href="/" class="back-link">← Kembali ke Beranda</a>
+
+        <h2>Admin Login</h2>
+        <div class="subtitle">Masuk untuk mengelola data portofolio.</div>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            {% for category, message in messages %}
+              <div class="alert-{{ category }}">{{ message }}</div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+        
+        <form method="POST">
+            <div class="form-group">
+                <label>Username</label>
+                <div class="input-wrapper">
+                    <span class="input-icon">👤</span>
+                    <input type="text" name="username" required placeholder="Masukkan username">
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <div class="input-wrapper">
+                    <span class="input-icon">🔒</span>
+                    <input type="password" name="password" required placeholder="Masukkan password">
+                </div>
+            </div>
+            <button type="submit">Masuk</button>
+        </form>
+    </div>
+</body>
+</html>

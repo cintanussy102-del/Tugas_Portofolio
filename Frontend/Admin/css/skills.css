@@ -1,0 +1,24 @@
+/* Kustomisasi Khusus Halaman Skill */
+.form-container {
+    background: #16192b;
+    padding: 1.5rem;
+    border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+/* Tabel Kustom */
+.admin-table th {
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.admin-table td {
+    font-size: 0.95rem;
+    color: #e2e8f0;
+}
+
+/* Tombol Hapus Efek Hover */
+.admin-table button:hover {
+    text-decoration: underline;
+    color: #f87171;
+}

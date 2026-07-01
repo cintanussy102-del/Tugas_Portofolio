@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Slabo+27px&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Portofolio - {{ profile.nama }}</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* Efek Geser Halus (Smooth Scroll) saat Menu Diklik */
+        html {
+            scroll-behavior: smooth;
+            background-color: #121212; 
+        }
+
+        body {
+            background: linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.65)), 
+                        url('/Frontend/Utama/Utama BG.jpg') no-repeat center top;
+            background-size: cover;
+            background-attachment: scroll;
+            margin: 0;
+            padding: 0;
+            color: #ffffff;
+            min-height: 100vh;
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            height: 100vh;
+            width: 100%;
+            background: transparent; 
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 20px;
+        }
+
+        .navbar {
+            position: fixed; 
+            top: 0;
+            left: 0; 
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 8%; 
+            z-index: 1000; 
+            background-color: rgba(18, 18, 18, 0.85); 
+            backdrop-filter: blur(10px); 
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #ffffff;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 15px;
+        }
+
+        .nav-links a {
+            color: #ffffff;
+            text-decoration: none;
+            padding: 8px 20px;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            border-radius: 20px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links .active, .nav-links a:hover {
+            background-color: #8D7B68; 
+            border-color: #8D7B68;
+        }
+
+        /* Hero Content */
+        .hero-content {
+            max-width: 900px;
+            z-index: 2;
+        }
+
+        .hero-content h3 {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            letter-spacing: 1px;
+        }
+
+        .hero-content h1 {
+            font-family: 'Slabo 27px', serif;
+            font-size: 40px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+            color: #ffffff;
+            line-height: 1.3;
+        }
+
+        .hero-content h1 span {
+            font-family: 'Slabo 27px', serif;
+            font-weight: 1000;
+            color: #F1DEC9; 
+        }
+
+        .hero-content p {
+            font-size: 17px;
+            line-height: 1.6;
+            margin: 0 auto 40px auto;
+            color: #e0e0e0;
+            max-width: 600px;
+        }
+
+        .btn-project {
+            display: inline-block;
+            color: #ffffff;
+            text-decoration: none;
+            background-color: #8D7B68;
+            padding: 12px 35px;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 600;
+            border: 2px solid #8D7B68;
+            transition: background 0.3s ease;
+        }
+
+        .btn-project:hover {
+            background-color: transparent;
+            border-color: #ffffff;
+        }
+    
+        /* About Section Style */
+        .about-section {
+            padding: 120px 8% 100px 8%; 
+            background: transparent; 
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            min-height: 100vh;
+        }
+
+        .about-main-title {
+            font-family: 'Arvo', serif;
+            font-size: 36px;
+            color: #ffffff;
+            margin-bottom: 60px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .about-main-title::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: -10px;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background-color: #8D7B68; 
+        }
+
+        .about-container {
+            max-width: 1000px;
+            width: 100%;
+            display: flex;
+            gap: 60px;
+            align-items: center;
+            text-align: left; 
+        }
+
+        .about-img-box {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+        }
+
+        .about-img-box img {
+            width: 280px;
+            height: 350px;
+            object-fit: cover;
+            border-radius: 20px;
+            border: 2px solid #8D7B68;
+            box-shadow: 12px 12px 0px rgba(141, 123, 104, 0.3); 
+        }
+
+        .about-text {
+            flex: 1.5;
+        }
+
+        .about-text h4 {
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 24px;
+            color: #F1DEC9; 
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .about-text p {
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 16px;
+            color: #cccccc;
+            line-height: 1.8;
+            margin-bottom: 30px;
+            font-weight: 300;
+        }
+
+        .btn-contact {
+            display: inline-block;
+            color: #ffffff;
+            text-decoration: none;
+            background-color: #8D7B68;
+            padding: 10px 30px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            border: 2px solid #8D7B68;
+            transition: all 0.3s ease;
+        }
+
+        .btn-contact:hover {
+            background-color: transparent;
+            border-color: #ffffff;
+        }
+
+        /* Skills Section Style */
+        .skills-section {
+            padding: 120px 8% 100px 8%;
+            background: transparent; 
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            min-height: 100vh;
+        }
+
+        .skills-main-title {
+            font-family: 'Arvo', serif;
+            font-size: 36px;
+            color: #ffffff;
+            margin-bottom: 60px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .skills-main-title::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: -10px;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background-color: #8D7B68;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 40px 30px;
+            max-width: 800px;
+            width: 100%;
+        }
+
+        .skill-card {
+            background-color: #1a1a1a;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px; 
+            padding: 20px;    
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .skill-card:hover {
+            transform: translateY(-5px);
+            border-color: #8D7B68;
+        }
+
+        .skill-icon-box {
+            width: 90px;    
+            height: 90px;     
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 15px; 
+            border: 1px solid rgba(141, 123, 104, 0.3);
+        }
+
+        .skill-icon-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .skill-card h4 {
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 16px;
+            color: #F1DEC9; 
+            font-weight: 600;
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        /* Experience Section Style */
+        .experience-section {
+            padding: 120px 8% 100px 8%;
+            background: transparent; 
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .experience-main-title {
+            font-family: 'Arvo', serif;
+            font-size: 36px;
+            color: #ffffff;
+            margin-bottom: 70px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .experience-main-title::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: -10px;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background-color: #8D7B68;
+        }
+
+        .timeline-container {
+            position: relative;
+            max-width: 900px;
+            width: 100%;
+            margin: 0 auto;
+            padding-left: 40px; 
+        }
+
+        .timeline-container::before {
+            content: '';
+            position: absolute;
+            left: 15px;
+            top: 10px;
+            bottom: 10px;
+            width: 3px;
+            background-color: #8D7B68; 
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 40px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -33px; 
+            top: 25px;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background-color: #1a1a1a;
+            border: 3px solid #8D7B68;
+            z-index: 2;
+        }
+
+        .experience-card {
+            background-color: #121212;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 25px 30px;
+            text-align: left;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .experience-year {
+            display: inline-block;
+            background-color: #ffe4c4; 
+            color: #121212; 
+            font-size: 13px;
+            font-weight: 700;
+            padding: 5px 15px;
+            border-radius: 15px;
+            margin-bottom: 15px;
+        }
+
+        .experience-card h3 {
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 20px;
+            color: #ffffff;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+        .experience-card h5 {
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 14px;
+            color: #8D7B68; 
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+
+        .experience-card p {
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 14.5px;
+            color: #cccccc;
+            line-height: 1.7;
+            font-weight: 300;
+        }
+        
+        /* Projects Section Style */
+        .projects-section {
+            padding: 120px 8% 100px 8%;
+            background: transparent; 
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            min-height: 100vh;
+        }
+
+        .projects-main-title {
+            font-family: 'Arvo', serif;
+            font-size: 36px;
+            color: #ffffff;
+            margin-bottom: 70px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .projects-main-title::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: -10px;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background-color: #8D7B68;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+            gap: 35px;
+            max-width: 950px;
+            width: 100%;
+        }
+
+        .project-card {
+            background-color: #1a1a1a;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            overflow: hidden; 
+            display: flex;
+            flex-direction: column;
+            text-align: left;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            border-color: #8D7B68;
+        }
+
+        .project-img-box {
+            width: 100%;
+            height: 120px;
+            overflow: hidden;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .project-img-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .project-card:hover .project-img-box img {
+            transform: scale(1.05); 
+        }
+
+        .project-content {
+            padding: 18px 20px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .project-content h3 {
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 18px;
+            color: #F1DEC9; 
+            margin-bottom: 10px;
+            font-weight: 600;
+            line-height: 1.4;
+        }
+
+        .project-content p {
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 14px;
+            color: #cccccc;
+            line-height: 1.6;
+            font-weight: 300;
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 15px;
+            margin-bottom: 20px;
+        }
+
+        .project-tag {
+            font-size: 11.5px;
+            background-color: rgba(141, 123, 104, 0.15);
+            color: #F1DEC9;
+            padding: 4px 12px;
+            border-radius: 20px;
+            border: 1px solid rgba(141, 123, 104, 0.25);
+            font-weight: 400;
+        }
+
+        .project-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: auto; 
+            padding-top: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .project-btn-link {
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 13px;
+            color: #f5d5b0; 
+            text-decoration: none;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: opacity 0.2s ease, transform 0.2s ease;
+        }
+
+        .project-btn-link:hover {
+            opacity: 0.85;
+            transform: translateX(2px); 
+        }
+
+        /* Contact Section Style */
+        .contact-section {
+            padding: 120px 8% 80px 8%;
+            background: transparent; 
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            min-height: 100vh;
+        }
+
+        .contact-main-title {
+            font-family: 'Arvo', serif;
+            font-size: 36px;
+            color: #ffffff;
+            margin-bottom: 20px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .contact-main-title::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: -10px;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background-color: #8D7B68;
+        }
+
+        .contact-subtitle {
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 15px;
+            color: #cccccc;
+            max-width: 600px;
+            margin-bottom: 30px;
+            font-weight: 300;
+            line-height: 1.6;
+        }
+
+        .contact-form-container {
+            max-width: 500px;
+            width: 100%;
+            background-color: rgba(26, 26, 26, 0.8); 
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 15px 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            margin-bottom: 50px;
+        }
+
+        .form-group {
+            width: 100%;
+            margin-bottom: 25px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 13.5px;
+            color: #F1DEC9; 
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .form-control {
+            width: 100%;
+            background-color: #121212;
+            border: 1px solid rgba(141, 123, 104, 0.3);
+            border-radius: 8px;
+            padding: 12px 15px;
+            color: #ffffff;
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 14px;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #f5d5b0; 
+        }
+
+        .btn-submit {
+            width: 100%;
+            background-color: #8D7B68;
+            color: #ffffff;
+            border: none;
+            border-radius: 8px;
+            padding: 14px;
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .btn-submit:hover {
+            background-color: #b19f8a;
+            transform: translateY(-2px);
+        }
+
+        .footer-container {
+            width: 100%;
+            margin-top: 60px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .footer-social-links {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+        }
+
+        .footer-icon-btn {
+            color: #ffffff;
+            font-size: 20px;
+            text-decoration: none;
+            transition: color 0.3s ease, transform 0.2s ease;
+        }
+
+        .footer-icon-btn:hover {
+            color: #f5d5b0;
+            transform: translateY(-3px);
+        }
+
+        .footer-copyright {
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 13px;
+            color: #888888;
+            font-weight: 300;
+            letter-spacing: 0.5px;
+        }
+    </style>
+</head>
+<body>
+
+    <section id="home" class="hero">
+        <nav class="navbar">
+            <div class="logo">
+                <a href="/admin/login" style="color: inherit; text-decoration: none;">Cinta.</a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home" class="nav-item active" data-section="home">Home</a></li>
+                <li><a href="#about" class="nav-item" data-section="about">About</a></li>
+                <li><a href="#skills" class="nav-item" data-section="skills">Skills</a></li>
+                <li><a href="#experience" class="nav-item" data-section="experience">Experience</a></li>
+                <li><a href="#projects" class="nav-item" data-section="projects">Projects</a></li>
+                <li><a href="#contact" class="nav-item" data-section="contact">Contact</a></li>
+            </ul>
+        </nav>
+
+        <div class="hero-content">
+            <h3>Welcome to My Portfolio</h3>
+            <h1>Hello, I'm <span>{{ profile.nama }}</span></h1>
+            <p>{{ profile.deskripsi }}</p>
+            <a href="#projects" class="btn-project">View My Projects</a>
+        </div>
+    </section> 
+
+    <section id="about" class="about-section">
+        <h2 class="about-main-title">About Me</h2>
+        <div class="about-container">
+            <div class="about-img-box">
+                <img src="/Frontend/Utama/almamater.jpg" alt="Foto Almamater Cinta">
+            </div>
+            <div class="about-text">
+                <h4>{{ profile.peran }}</h4>
+                <p>{{ profile.sub_deskripsi }}</p>
+                <a href="#contact" class="btn-contact">Contact Me</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="skills" class="skills-section">
+        <h2 class="skills-main-title">My Skills</h2>
+        <div class="skills-grid">
+            {% for skill in skills %}
+            <div class="skill-card">
+                <img src="/Frontend/Utama/{{ skill.img }}" alt="{{ skill.name }}" width="80" height="80" style="object-fit: contain;">
+                <h3>{{ skill.name }}</h3>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <section id="experience" class="experience-section">
+        <h2 class="experience-main-title">Experience</h2>
+        <div class="timeline-container">
+            {% for exp in experiences %}
+            <div class="timeline-item">
+                <div class="experience-card">
+                    <span class="experience-year">{{ exp.year }}</span>
+                    <h3>{{ exp.title }}</h3>
+                    <h5>{{ exp.place }}</h5>
+                    <p>{{ exp.desc }}</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <section id="projects" class="projects-section">
+        <h2 class="projects-main-title">My Projects</h2>
+        <div class="projects-grid">
+            {% for project in projects %}
+            <div class="project-card" style="background: rgba(38, 32, 30, 0.6); border: 1px solid rgba(61, 53, 49, 0.4); border-radius: 12px; overflow: hidden; margin-bottom: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
+                <img src="{{ project.cover }}" alt="{{ project.title }}" style="width: 100%; height: auto; display: block; object-fit: cover;">
+                <div class="project-info" style="padding: 25px;">
+                    <h3 style="color: #d4af37; margin-top: 0; font-size: 22px;">{{ project.title }}</h3>
+                    <p style="color: #ccc; line-height: 1.6; font-size: 15px;">{{ project.description }}</p>
+                    <div class="project-tags" style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 15px;">
+                        {% for tag in project.tags.split(',') %}
+                            <span style="background: #1a1512; color: #ffd39e; border: 1px solid #4a3f3b; padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: 500;">
+                                {{ tag.strip() }}
+                            </span>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <section id="contact" style="padding: 120px 8% 80px 8%; text-align: center; position: relative;">
+        <h2 style="color: #d4af37; margin-bottom: 10px; font-size: 32px; font-family: 'Segoe UI', sans-serif;">Contact Me</h2>
+        <hr style="border: 0; border-top: 2px solid #4a3f3b; max-width: 80px; margin: 0 auto 40px auto;">
+
+        <div style="
+            background: rgba(38, 32, 30, 0.65); 
+            padding: 40px; 
+            border-radius: 12px; 
+            border: 1px solid rgba(61, 53, 49, 0.4); 
+            max-width: 500px; 
+            margin: 0 auto;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(8px);
+        ">
+            <style>
+                .contact-input {
+                    width: 100%; 
+                    padding: 14px; 
+                    margin-bottom: 18px; 
+                    background-color: #120f0d; 
+                    border: 1px solid #4a3f3b; 
+                    color: #ffd39e; 
+                    border-radius: 6px; 
+                    box-sizing: border-box;
+                    font-family: inherit;
+                    font-size: 15px;
+                    transition: all 0.3s ease;
+                }
+                .contact-input:focus {
+                    border-color: #d4af37;
+                    outline: none;
+                    background-color: #1a1512;
+                    box-shadow: 0 0 8px rgba(212, 175, 55, 0.2);
+                }
+                .contact-input::placeholder {
+                    color: #8c7662;
+                }
+                .btn-send {
+                    width: 100%;
+                    background: #d4af37; 
+                    color: #1a1512; 
+                    border: none; 
+                    padding: 14px; 
+                    font-weight: bold; 
+                    border-radius: 6px; 
+                    cursor: pointer; 
+                    font-size: 16px;
+                    transition: all 0.3s ease;
+                }
+                .btn-send:hover {
+                    background: #f3d26a;
+                    transform: translateY(-2px);
+                    box-shadow: 0 4px 12px rgba(214, 175, 55, 0.3);
+                }
+            </style>
+
+            <form action="/" method="POST">
+                <div class="form-group">
+                    <input type="text" name="name" class="contact-input" required placeholder="Your Name">
+                </div>
+                <div class="form-group">
+                    <input type="email" name="email" class="contact-input" required placeholder="Your Email">
+                </div>
+                <div class="form-group">
+                    <textarea name="message" class="contact-input" style="height: 120px; resize: vertical;" required placeholder="Your Message"></textarea>
+                </div>
+                <button type="submit" class="btn-send">🚀 Send Message</button>
+            </form>
+        </div>
+
+        <div class="footer-container">
+            <div class="footer-social-links">
+                <a href="mailto:{{ contact.email }}" class="footer-icon-btn" title="Email"><i class="fas fa-envelope"></i></a>
+                <a href="{{ contact.github }}" class="footer-icon-btn" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
+                <a href="{{ contact.linkedin }}" class="footer-icon-btn" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                <a href="{{ contact.instagram }}" class="footer-icon-btn" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+            </div>
+            <p class="footer-copyright">© 2026 {{ profile.nama }}. All Rights Reserved.</p>
+        </div>
+    </section>
+
+    <script>
+        const sections = document.querySelectorAll("section");
+        const navItems = document.querySelectorAll(".nav-item");
+
+        window.addEventListener("scroll", () => {
+            let current = "";
+            sections.forEach((section) => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (pageYOffset >= sectionTop - sectionHeight / 3) {
+                    current = section.getAttribute("id");
+                }
+            });
+
+            navItems.forEach((item) => {
+                item.classList.remove("active");
+                if (item.getAttribute("data-section") === current) {
+                    item.classList.add("active");
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
